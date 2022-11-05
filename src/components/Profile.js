@@ -31,9 +31,15 @@ export default function Profile () {
         */
         
         const items = await Promise.all(transaction.map(async i => {
-            const tokenURI = await contract.tokenURI(i.tokenId);
-            let meta = await axios.get(tokenURI);
-            meta = meta.data;
+            
+            let tokenURI = await contract.tokenURI(i.tokenId);
+            const arr = tokenURI.split("/");
+            const hash = arr[arr.length - 1];
+            console.log(hash);
+            tokenURI = await axios.get(`https://ipfs.io/ipfs/${hash}`);
+            // let meta = await axios.get(tokenURI);
+            let meta = {}
+            // meta = meta.data;
 
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
             let item = {

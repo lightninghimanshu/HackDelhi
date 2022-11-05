@@ -5,7 +5,7 @@ import Marketplace from '../Marketplace.json';
 import { useLocation } from "react-router";
 
 export default function SellNFT () {
-    const [formParams, updateFormParams] = useState({ name: '', description: '', price: ''});
+    const [formParams, updateFormParams] = useState({ name: 'ss', description: 'ss', price: '0.01'});
     const [fileURL, setFileURL] = useState(null);
     const ethers = require("ethers");
     const [message, updateMessage] = useState('');
@@ -72,7 +72,11 @@ export default function SellNFT () {
             listingPrice = listingPrice.toString()
 
             //actually create the NFT
+            console.log("meta "+metadataURL)
+            console.log("price "+price)
+            console.log("listingPrice "+listingPrice)
             let transaction = await contract.createToken(metadataURL, price, { value: listingPrice })
+            // let transaction = await contract.createToken(metadataURL, price, { value: '0.01' })
             await transaction.wait()
 
             alert("Successfully listed your NFT!");

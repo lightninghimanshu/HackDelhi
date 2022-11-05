@@ -21,7 +21,13 @@ async function getNFTData(tokenId) {
     //Pull the deployed contract instance
     let contract = new ethers.Contract(MarketplaceJSON.address, MarketplaceJSON.abi, signer)
     //create an NFT Token
-    const tokenURI = await contract.tokenURI(tokenId);
+    let tokenURI = await contract.tokenURI(tokenId);
+    console.log("token "+tokenURI);
+    const arr = tokenURI.split("/");
+    const hash = arr[arr.length - 1];
+    console.log(hash);
+    tokenURI = `https://ipfs.io/ipfs/${hash}`;
+    console.log(tokenURI);
     const listedToken = await contract.getListedTokenForId(tokenId);
     let meta = await axios.get(tokenURI);
     meta = meta.data;
